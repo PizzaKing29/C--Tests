@@ -12,3 +12,4 @@ C:\Users\evant\My Code\C# Tests\main\obj\Debug\net9.0\refint\main.dll
 C:\Users\evant\My Code\C# Tests\main\obj\Debug\net9.0\main.pdb
 C:\Users\evant\My Code\C# Tests\main\obj\Debug\net9.0\main.genruntimeconfig.cache
 C:\Users\evant\My Code\C# Tests\main\obj\Debug\net9.0\ref\main.dll
+C:\Users\evant\My Code\C# Tests\main\obj\Debug\net9.0\main.sourcelink.json
