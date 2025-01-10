@@ -20,6 +20,7 @@
             if (startInput == "Y")
             {
                 playing = true;
+                Console.Clear();
             } 
             else if (startInput == "N")
             {
@@ -31,7 +32,7 @@
             }
 
 
-            while (playing)
+            while (playing && health > 1)
             {
                 Console.WriteLine($"Your health is {health} points.");
                 Console.WriteLine($"You have {gold} gold.");
@@ -54,6 +55,7 @@
                     Random randomHealth = new Random();
                     int creatureChance = randomCreature.Next(1, 3);
                     int goldFound = randomGold.Next(1, 26);
+                    int healthLost = randomHealth.Next(1, 33);
 
                     switch (pathwayAnswer)
                     {
@@ -70,8 +72,11 @@
                             {
                                 creatureChance = randomCreature.Next(1, 3);
                                 goldFound = randomGold.Next(1, 26);
+                                healthLost = randomHealth.Next(1, 33);
                                 gold -= goldFound;
+                                health -= healthLost;
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a bear has attacked you!");
+                                Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
                                 
                             }
                             break;
@@ -88,8 +93,11 @@
                             {
                                 creatureChance = randomCreature.Next(1, 3);
                                 goldFound = randomGold.Next(1, 26);
+                                healthLost = randomHealth.Next(1, 33);
                                 gold -= goldFound;
+                                health -= healthLost;
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a snake has attacked you!");
+                                Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
                                 
                             }
                             break;
@@ -107,7 +115,23 @@
                 }
 
                 }
+                Console.Clear();
                 Console.WriteLine("Thanks for playing!");
+                Console.WriteLine($"You had {health} health.");
+                Console.WriteLine($"You also ended with {gold} gold!");
+
+                if (health < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Thanks for playing! Unfortunatley you have died, yikes...");
+                    Console.WriteLine($"But you ended with {gold} gold!");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Thanks for playing! Unfortunatley you have died, yikes...");
+                    Console.WriteLine($"You also ended with {gold} gold, better luck next time!");
+                }
             }
         }
     }
