@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿#nullable disable
 
 namespace Main
 {
@@ -9,6 +9,7 @@ namespace Main
         public static string[] items = {""};
         public static int gold = 0;
         public static int health = 100;
+        public static string input = "";
         public static Random randomCreature = new Random();
         public static Random randomGold = new Random();
         public static Random randomHealth = new Random();
@@ -24,54 +25,50 @@ namespace Main
             Console.WriteLine("but be careful as some creatures in the forest can kill you while collecting the gold\n");
             Console.WriteLine("Start? (Y/N)");
 
-            string? startInput = Console.ReadLine();
-            startInput = startInput.ToUpper();
+            input = Console.ReadLine();
 
-            if (startInput == "Y")
+            if (input == "Y" || input == "y")
             {
                 playing = true;
                 Console.Clear();
             } 
-            else if (startInput == "N")
+            else if (input == "N" || input == "n")
             {
                 Console.WriteLine("\nHave a great day then!");
             } 
             else
             {
-                Console.WriteLine("\nYour input is not a valid answer.");
+                return;
             }
 
 
             while (playing && health > 0)
             {
-                Console.WriteLine($"Your health is {health} points.");
-                Console.WriteLine($"You have {gold} gold.");
-                Console.WriteLine("Would you like to keep on walking? (Y/N)");
-                string? playingInput = Console.ReadLine();
-                playingInput = playingInput.ToUpper();
+                DisplayStats();
+                input = Console.ReadLine();
 
 
-                if (playingInput == "Y")
+                if (input == "Y" || input == "y")
                 {
                     Console.Clear();
                     Console.WriteLine("Which pathway do you want to take?");
                     Console.WriteLine("forest or cave");
-                    string? pathwayAnswer = Console.ReadLine();
-                    pathwayAnswer = pathwayAnswer.ToLower();
-                    Console.Clear();
+                    input = Console.ReadLine();
+                    input = input.ToLower();
 
-                    HandleEncounter(pathwayAnswer);
+                    HandleEncounter(input);
 
                     
                 }
-                else if (playingInput == "N")
+                else if (input == "N" || input == "n")
                 {
                     playing = false;
                 }
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("Invalid answer. \n");
+                    ValidateInput($"{input} is an invalid input.");
+                    continue;
                 }
 
                 }
@@ -86,28 +83,27 @@ namespace Main
 
             public static void HandleEncounter (string pathwawyAnswer)
             {
+                creatureChance = randomCreature.Next(1, 3);
+                goldFound = randomGold.Next(1, 26);
+                healthLost = randomHealth.Next(1, 33);
+
                 switch (pathwawyAnswer)
                     {
                         case "forest":
                             if (creatureChance == 1)
                             {
-                                creatureChance = randomCreature.Next(1, 3);
-                                goldFound = randomGold.Next(1, 26);
                                 gold += goldFound;
+                                Console.Clear();
                                 Console.WriteLine($"\nYou have found {goldFound} gold, awesome!");
-                                
                             }
                             else
                             {
-                                creatureChance = randomCreature.Next(1, 3);
-                                goldFound = randomGold.Next(1, 26);
-                                healthLost = randomHealth.Next(1, 33);
-
                                 if (gold > 0 && goldFound < gold) // makes sure gold cannot go in the negatives
                                 {
                                     gold -= goldFound;
                                 }
                                 health -= healthLost;
+                                Console.Clear();
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a bear has attacked you!");
                                 Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
                                 
@@ -117,22 +113,18 @@ namespace Main
                         case "cave":
                             if(creatureChance == 1)
                             {
-                                creatureChance = randomCreature.Next(1, 3);
-                                goldFound = randomGold.Next(1, 26);
-                                gold += goldFound;
+                                Console.Clear();
                                 Console.WriteLine($"\nYou have found {goldFound} gold, awesome!");
                             }
                             else
                             {
-                                creatureChance = randomCreature.Next(1, 3);
-                                goldFound = randomGold.Next(1, 26);
-                                healthLost = randomHealth.Next(1, 33);
 
                                 if (gold > 0 && goldFound < gold) // makes sure gold cannot go in the negatives
                                 {
                                     gold -= goldFound;
                                 }
                                 health -= healthLost;
+                                Console.Clear();
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a snake has attacked you!");
                                 Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
                                 
@@ -140,14 +132,16 @@ namespace Main
                             break;
 
                         default:
-                            Console.WriteLine("Invalid pathway choice. Please type 'forest' or 'cave'.");
+                            ValidateInput("Please enter 'forest' or 'cave'. Press ENTER to return.");
                         break;
                     }
             }
 
-            public static void ValidateInput ()
+            public static string ValidateInput (string message)
             {
+                Console.WriteLine(message);
 
+                return Console.ReadLine();
             }
 
             public static void GameOver ()
