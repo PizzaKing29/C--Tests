@@ -32,10 +32,7 @@ namespace Main
 
             public static void HandleEncounter (string pathwawyAnswer)
             {
-                creatureChance = randomCreature.Next(1, 3);
-                goldFound = randomGold.Next(1, 26);
-                healthLost = randomHealth.Next(1, 33);
-                treasureChance = randomTreasure.Next(1, 21);
+                UpdateRandom();
 
                 switch (pathwawyAnswer)
                     {
@@ -47,7 +44,7 @@ namespace Main
                             }
                             else if (creatureChance == 1)
                             {
-                                gold += goldFound;
+                                Player.Gold(goldFound, false); // adds goldFound to gold
                                 Console.Clear();
                                 Console.WriteLine($"\nYou have found {goldFound} gold, awesome!");
                             }
@@ -55,7 +52,7 @@ namespace Main
                             {
                                 if (gold > 0 && goldFound < gold) // makes sure gold cannot go in the negatives
                                 {
-                                    gold -= goldFound;
+                                    Player.Gold(goldFound, true); // subtracts goldFound to gold
                                 }
                                 health -= healthLost;
                                 Console.Clear();
@@ -74,6 +71,7 @@ namespace Main
                             else if(creatureChance == 1)
                             {
                                 Console.Clear();
+                                Player.Gold(goldFound, false); // adds goldFound to gold
                                 Console.WriteLine($"\nYou have found {goldFound} gold, awesome!");
                             }
                             else
@@ -81,7 +79,7 @@ namespace Main
 
                                 if (gold > 0 && goldFound < gold) // makes sure gold cannot go in the negatives
                                 {
-                                    gold -= goldFound;
+                                    Player.Gold(goldFound, true); // subtracts goldFound to gold
                                 }
                                 health -= healthLost;
                                 Console.Clear();
@@ -130,6 +128,14 @@ namespace Main
                 gold += goldFound + 100;
                 Console.Clear();
                 Console.WriteLine($"\nYou have found the buried treasure and found {goldFound + 100} gold!");
+            }
+
+            public static void UpdateRandom ()
+            {
+                creatureChance = randomCreature.Next(1, 3);
+                goldFound = randomGold.Next(1, 26);
+                healthLost = randomHealth.Next(1, 33);
+                treasureChance = randomTreasure.Next(1, 21);
             }
         }
     }
