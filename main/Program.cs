@@ -117,7 +117,7 @@ namespace Main
                     Console.WriteLine("Thanks for playing! Unfortunatley you have died, yikes...");
                     Console.WriteLine($"But you ended with {gold} gold!");
                 }
-                else
+                else if(health < 1 && gold < 1)
                 {
                     Console.Clear();
                     Console.WriteLine("Thanks for playing! Unfortunatley you have died, yikes...");
