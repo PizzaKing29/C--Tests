@@ -45,6 +45,7 @@ namespace Main
                             else if (creatureChance == 1)
                             {
                                 Player.Gold(goldFound, false); // adds goldFound to gold
+                                Player.Health(healthLost, false); // adds health found
                                 Console.Clear();
                                 Console.WriteLine($"\nYou have found {goldFound} gold, awesome!");
                             }
@@ -54,7 +55,7 @@ namespace Main
                                 {
                                     Player.Gold(goldFound, true); // subtracts goldFound to gold
                                 }
-                                health -= healthLost;
+                                Player.Health(healthLost, true); // subtracts health found
                                 Console.Clear();
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a bear has attacked you!");
                                 Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
@@ -81,7 +82,7 @@ namespace Main
                                 {
                                     Player.Gold(goldFound, true); // subtracts goldFound to gold
                                 }
-                                health -= healthLost;
+                                Player.Health(healthLost, true); // subtracts health found
                                 Console.Clear();
                                 Console.WriteLine($"\nYou have lost {goldFound} gold, and a snake has attacked you!");
                                 Console.WriteLine($"You have also lost {healthLost} health, uh oh!\n");
@@ -125,7 +126,7 @@ namespace Main
 
             public static void HiddenTreasure ()
             {
-                gold += goldFound + 100;
+                Player.Gold(goldFound + 100, false); // adds goldFound to gold
                 Console.Clear();
                 Console.WriteLine($"\nYou have found the buried treasure and found {goldFound + 100} gold!");
             }
